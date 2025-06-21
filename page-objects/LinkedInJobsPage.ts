@@ -46,10 +46,31 @@ export class LinkedInJobsPage {
   }
 
   async isJobAlertToggleTurnedOn() {
-    Logger.info('Checking if job alert toggle is turned on');
-    return await this.jobAlertToggle.getAttribute('aria-checked');
-  }
+  Logger.info('Checking if job alert toggle is turned on');
 
+  const initialValue = await this.jobAlertToggle.getAttribute('aria-checked');
+  const timeoutMs = 2000;
+  const pollIntervalMs = 100;
 
+  return new Promise((resolve) => {
+    const startTime = Date.now();
 
+    const check = async () => {
+      const currentValue = await this.jobAlertToggle.getAttribute('aria-checked');
+
+      if (currentValue !== initialValue) {
+        // Attribute changed, resolve immediately
+        resolve(currentValue);
+      } else if (Date.now() - startTime >= timeoutMs) {
+        // Timeout reached, resolve with current value anyway
+        resolve(currentValue);
+      } else {
+        // Continue polling
+        setTimeout(check, pollIntervalMs);
+      }
+    };
+
+    check();
+  });
+}
 }
