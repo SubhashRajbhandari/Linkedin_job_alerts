@@ -44,4 +44,12 @@ export class LinkedInJobsPage {
     Logger.info(`Getting job search title text`);
     return await this.jobSearchTitle.textContent();
   }
+
+  async isJobAlertToggleTurnedOn() {
+    Logger.info('Checking if job alert toggle is turned on');
+    return await this.jobAlertToggle.getAttribute('aria-checked');
+  }
+
+
+
 }

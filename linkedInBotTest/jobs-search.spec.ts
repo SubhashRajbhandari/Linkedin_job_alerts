@@ -15,7 +15,7 @@ test('LinkedIn Jobs Search - Quality Assurance', async ({ page }) => {
 
   await loginPage.goto();
   await loginPage.login(USERNAME, PASSWORD);
-
+  
   await jobsPage.gotoJobs();
   await jobsPage.searchJob('Quality Assurance');
   
@@ -38,7 +38,10 @@ test('Verify LinkedIn Jobs Search Job has Set alert toggle button' , async ({ pa
   
   // Toggle the job alert button
   await jobsPage.toggleJobAlert();
-    
+
+
+
+  await expect(await jobsPage.isJobAlertToggleTurnedOn()).toBe('true');
 });
 
 
